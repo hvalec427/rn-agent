@@ -41,10 +41,13 @@ Uninstall: the same command with `uninstall.sh` removes the plugin; add
 
 ## Using it
 
-There's nothing to call: start Claude Code in an app's checkout and work as
-usual. Ask a question and the agent answers from the code; ask for a change and
-it starts the app on its own simulator, checks the change there and reports
-what it saw.
+1. `claude --worktree price-screen`: a task in a worktree and branch of its own.
+2. Ask questions (answered from the code) and for changes: the agent starts the
+   app on its own simulator, checks each change there and reports what it saw.
+3. Say **finish** (or "open a PR"): it commits, pushes, opens the pull request,
+   stops the app (its simulator is deleted) and removes the worktree. The
+   branch stays until the PR is merged.
+4. Exit Claude.
 
 ## How it works
 
@@ -64,12 +67,16 @@ claude --worktree price-screen
   port and a simulator of its own, the app installed from the main checkout's
   last build), wait for it with signalbox's `wait_ready`, look with boop, and
   read errors and logs through signalbox's tools.
-- **Session end:** the app it started stops and its simulator is deleted. A
-  signalbox dashboard you started yourself is left alone.
+- **Finish:** the `finish` skill commits, pushes and opens the pull request
+  (what changed, how it was verified), then stops the app and removes the
+  worktree, keeping the branch.
+- **Session end:** if the app is still running, it stops and its simulator is
+  deleted. A signalbox dashboard you started yourself is left alone.
 
 ## Layout
 
 - `plugin/`: the plugin: `hooks/` (session start and end), `skills/run-app/`,
+  `skills/finish/`,
   `.mcp.json` (signalbox's MCP server).
 - `.claude-plugin/marketplace.json`: this repo as a plugin marketplace.
 - `install.sh`, `uninstall.sh`.
