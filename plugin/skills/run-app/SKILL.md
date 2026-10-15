@@ -2,6 +2,7 @@
 name: run-app
 description: Run this React Native checkout's app on its own simulator and check changes in it. Use before changing UI or behaviour you'll need to see in the app, and when asked to run, screenshot, tap through or test the app.
 allowed-tools: Bash(signalbox *) Bash(boop *) mcp__plugin_rn-agent_signalbox
+user-invocable: false
 ---
 
 # Run the app
@@ -47,5 +48,4 @@ name what you couldn't verify and why (no test account, backend down, build fail
 ## Leave it running
 
 The app stays up between turns, so the next check is quick. It stops, and its simulator is
-deleted, when this Claude session ends; `signalbox down` stops it sooner. The user can
-watch it with `tmux -L signalbox attach` (a window named after the checkout).
+deleted, when this Claude session ends; `signalbox down` stops it sooner.

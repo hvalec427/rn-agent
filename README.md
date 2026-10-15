@@ -44,7 +44,7 @@ Uninstall: the same command with `uninstall.sh` removes the plugin; add
 There's nothing to call: start Claude Code in an app's checkout and work as
 usual. Ask a question and the agent answers from the code; ask for a change and
 it starts the app on its own simulator, checks the change there and reports
-what it saw. To start the app yourself first, type `/rn-agent:run-app`.
+what it saw.
 
 ## How it works
 
@@ -66,8 +66,6 @@ claude --worktree price-screen
   read errors and logs through signalbox's tools.
 - **Session end:** the app it started stops and its simulator is deleted. A
   signalbox dashboard you started yourself is left alone.
-
-Watch what agents run with `tmux -L signalbox attach` (a window per checkout).
 
 ## Layout
 
