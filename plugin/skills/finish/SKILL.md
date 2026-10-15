@@ -2,6 +2,7 @@
 name: finish
 description: Finish this task: commit, push, open a pull request, then stop the app and remove this worktree (the branch stays). Use when the user says finish, ship it, or asks for a PR for the work in a `claude --worktree` session.
 allowed-tools: Bash(git status *) Bash(git diff *) Bash(git log *) Bash(git add *) Bash(git commit *) Bash(git push *) Bash(git rev-parse *) Bash(git worktree *) Bash(gh pr *) Bash(gh repo view *) Bash(signalbox *)
+user-invocable: false
 ---
 
 # Finish
