@@ -56,6 +56,58 @@ Uninstall: the same command with `uninstall.sh` removes the plugin; add
    branch stays until the PR is merged.
 4. Exit Claude.
 
+## Bigger features, with Matt Pocock's skills
+
+rn-agent works alongside [Matt Pocock's skills](https://github.com/mattpocock/skills):
+they plan and build the code, rn-agent gives each session an app of its own to
+check it in. For a feature too big for one go:
+
+**Plan**, in a normal session in the main checkout:
+
+1. `/grill-with-docs` interviews you until the feature is clear, writing the
+   app's domain docs as it goes (`GLOSSARY.md`, decision records in `docs/adr/`).
+2. `/to-spec` turns that into the **spec**: the whole feature, once: the
+   problem, the solution, user stories, the implementation and testing
+   decisions. It says *what* to build and *why*.
+3. `/to-tickets` splits the spec into **tickets**: thin end-to-end slices, each
+   small enough for one agent session and checkable on its own, each listing the
+   tickets that block it. They say *in what pieces, and in what order*.
+
+For example, spec #123 "Price screen redesign" becomes tickets #124 "Show prices
+per item" (blocked by nothing), #125 "Discount badges" and #126 "Price breakdown
+sheet" (both blocked by #124).
+
+Specs and tickets go to the issue tracker `/setup-matt-pocock-skills` set up,
+once per repo: GitHub Issues (one issue each), or markdown files under
+`.scratch/<feature>/`. The setup and the domain docs add files to the repo; in
+a shared repo, pick local markdown (and keep `.scratch/` out of git) to keep it
+to yourself.
+
+**Build**, one feature per worktree and one pull request per feature; separate
+features can run side by side, each with its own simulator:
+
+```sh
+claude -w price-redesign
+```
+
+then the tickets in order, each building on the last:
+
+```
+/implement ticket 124
+/implement ticket 125
+/implement ticket 126
+finish
+```
+
+When a session gets long, `/handoff`, exit, and carry on in a new session in the
+same worktree (`cd .claude/worktrees/price-redesign && claude`).
+
+`/implement-spec #123` does this on its own: it follows the blocking order,
+builds independent tickets at the same time in subagents (each in a worktree of
+its own) and ends with a code review. rn-agent doesn't support those subagent
+worktrees yet (they get no `node_modules`, and an app a subagent starts isn't
+stopped when it's done), so build ticket by ticket for now.
+
 ## How it works
 
 Start each task in a worktree of its own:
