@@ -32,6 +32,8 @@ It also needs (the installer says what's missing):
 - macOS with Xcode selected: `sudo xcode-select -s /Applications/Xcode.app`
 - tmux: `brew install tmux`
 - GitHub's CLI, logged in (`gh auth login`), for opening pull requests
+- ffmpeg (`brew install ffmpeg`), optional: turns recordings into GIFs that
+  play inside the PR
 
 Only the plugin, from inside Claude Code:
 
@@ -51,9 +53,11 @@ Uninstall: the same command with `uninstall.sh` removes the plugin; add
 1. `claude --worktree price-screen`: a task in a worktree and branch of its own.
 2. Ask questions (answered from the code) and for changes: the agent starts the
    app on its own simulator, checks each change there and reports what it saw.
-3. Say **finish** (or "open a PR"): it commits, pushes, opens the pull request,
-   stops the app (its simulator is deleted) and removes the worktree. The
-   branch stays until the PR is merged.
+3. Say **finish** (or "open a PR"): it commits, pushes and opens the pull
+   request, with screenshots of the changed screens and a short recording of
+   the flow, so you can review it without running the app. Then it stops the
+   app (its simulator is deleted) and removes the worktree. The branch stays
+   until the PR is merged.
 4. Exit Claude.
 
 ## Bigger features, with Matt Pocock's skills
@@ -126,9 +130,12 @@ claude --worktree price-screen
   port and a simulator of its own, the app installed from the main checkout's
   last build), wait for it with signalbox's `wait_ready`, look with boop, and
   read errors and logs through signalbox's tools.
-- **Finish:** the `finish` skill commits, pushes and opens the pull request
-  (what changed, how it was verified), then stops the app and removes the
-  worktree, keeping the branch.
+- **Finish:** the `finish` skill screenshots the changed screens and records
+  the flow (a GIF, which plays inline, when ffmpeg is installed), commits,
+  pushes and opens the pull request (what changed, how it was verified, the
+  media), then stops the app and removes the worktree, keeping the branch.
+  GitHub has no CLI for PR attachments, so the media goes to a branch of its
+  own in the repo, `rn-agent-media`, which shares no history with the code.
 - **Session end:** if the app is still running, it stops and its simulator is
   deleted. A signalbox dashboard you started yourself is left alone.
 
