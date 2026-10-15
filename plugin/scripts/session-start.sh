@@ -28,7 +28,7 @@ fi
 [ -n "$copied" ] && echo "rn-agent cloned these from the main checkout into this worktree:$copied."
 
 if ! command -v signalbox >/dev/null 2>&1; then
-  echo "This is a React Native checkout, but signalbox isn't installed, so its app can't be run here. Tell the user to install the rn-agent tools: gh api repos/hvalec427/rn-agent/contents/install.sh -H \"Accept: application/vnd.github.raw\" | sh"
+  echo "This is a React Native checkout, but signalbox isn't installed, so its app can't be run here. Tell the user to install the rn-agent tools: curl -fsSL https://raw.githubusercontent.com/hvalec427/rn-agent/master/install.sh | sh"
   exit 0
 fi
 

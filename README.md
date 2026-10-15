@@ -17,11 +17,8 @@ It's a Claude Code plugin on top of three tools, each in its own repo:
 
 ## Install
 
-The repo is private for now, so install through GitHub's CLI (logged in with
-`gh auth login`):
-
 ```sh
-gh api repos/hvalec427/rn-agent/contents/install.sh -H "Accept: application/vnd.github.raw" | sh
+curl -fsSL https://raw.githubusercontent.com/hvalec427/rn-agent/master/install.sh | sh
 ```
 
 It installs the three tools (each into `~/.<tool>/bin`, no sudo) and the

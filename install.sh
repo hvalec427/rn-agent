@@ -2,7 +2,7 @@
 # Install rn-agent: signalbox, simon and boop (each from its own releases, into
 # ~/.<tool>/bin, no sudo) and the rn-agent Claude Code plugin.
 #
-#   gh api repos/hvalec427/rn-agent/contents/install.sh -H "Accept: application/vnd.github.raw" | sh
+#   curl -fsSL https://raw.githubusercontent.com/hvalec427/rn-agent/master/install.sh | sh
 #   … | sh -s -- stable     the tools' channel: dev (default), stable, nightly, or a version tag
 #
 # Run it again to update everything.
@@ -31,10 +31,9 @@ done
 
 echo "── Claude Code plugin"
 if command -v claude >/dev/null 2>&1; then
-  # The first run adds and installs it; later runs update it. The repo is
-  # private for now: GitHub's short form uses https, SSH is the fallback.
+  # The first run adds and installs it; later runs update it.
   if ! claude plugin marketplace list 2>/dev/null | grep -q "rn-agent"; then
-    claude plugin marketplace add "$REPO" >/dev/null 2>&1 || claude plugin marketplace add "git@github.com:$REPO.git"
+    claude plugin marketplace add "$REPO"
   else
     claude plugin marketplace update rn-agent
   fi
