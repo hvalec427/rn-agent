@@ -25,7 +25,13 @@ It installs the three tools (each into `~/.<tool>/bin`, no sudo) and the
 plugin into Claude Code. Run it again to update everything. The tools come
 from their dev builds, which have what agents need (`signalbox up --detach`);
 pick another channel with `… | sh -s -- stable` (or `nightly`, or a version
-tag). It needs macOS, Xcode (selected with `xcode-select`) and tmux.
+tag). Open a new terminal afterwards, so the tools are on your PATH.
+
+It also needs (the installer says what's missing):
+
+- macOS with Xcode selected: `sudo xcode-select -s /Applications/Xcode.app`
+- tmux: `brew install tmux`
+- GitHub's CLI, logged in (`gh auth login`), for opening pull requests
 
 Only the plugin, from inside Claude Code:
 
@@ -34,7 +40,8 @@ Only the plugin, from inside Claude Code:
 /plugin install rn-agent@rn-agent
 ```
 
-Register each app once, in its main checkout: `signalbox init`.
+Register each app once, in its main checkout: `signalbox init` (it asks for
+a name; skip it if signalbox already knows the app).
 
 Uninstall: the same command with `uninstall.sh` removes the plugin; add
 `sh -s -- --tools` to remove the tools too. It adds nothing to your repos.
