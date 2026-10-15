@@ -46,6 +46,13 @@ fi
 
 echo "──"
 command -v tmux >/dev/null 2>&1 || echo "Also needed: tmux (brew install tmux); agents run the app in it."
+# gh 2.99 added --attach, which puts screenshots and recordings in pull requests.
+ghv=$(gh --version 2>/dev/null | sed -n 's/^gh version \([0-9]*\)\.\([0-9]*\).*/\1 \2/p')
+if [ -z "$ghv" ]; then
+  echo "Also needed: GitHub's CLI for pull requests (brew install gh, then gh auth login)."
+elif [ "${ghv% *}" -eq 2 ] && [ "${ghv#* }" -lt 99 ]; then
+  echo "Update GitHub's CLI (brew upgrade gh): pull requests get screenshots from gh 2.99 on."
+fi
 xcrun simctl help >/dev/null 2>&1 || echo "Also needed: Xcode selected for simulators (sudo xcode-select -s /Applications/Xcode.app)."
 echo "Done. Register each app once: signalbox init in its main checkout."
 echo "Then start a task with: claude --worktree <name>   (open a new terminal first if a tool isn't found)"

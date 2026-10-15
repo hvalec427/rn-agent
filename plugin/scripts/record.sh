@@ -2,8 +2,8 @@
 # Record this checkout's simulator (the device in .signalbox/session.json).
 #
 #   record.sh start          start recording in the background
-#   record.sh stop [name]    stop; prints the recording: a GIF (plays inline in
-#                            a PR) when ffmpeg is installed, else the .mp4
+#   record.sh stop [name]    stop; prints the recording (.mp4, which plays inline
+#                            when attached to a PR)
 #
 # Files go to .signalbox/media/, which git ignores and which goes away with the
 # worktree.
@@ -41,13 +41,6 @@ stop)
   rm -f "$pidfile"
   mp4="$media/$name.mp4"
   mv "$media/recording.mp4" "$mp4"
-  if command -v ffmpeg >/dev/null 2>&1; then
-    gif="$media/$name.gif"
-    # Small and short enough for a PR: 10 fps, 320 px wide, one palette.
-    ffmpeg -nostdin -loglevel error -y -i "$mp4" \
-      -vf "fps=10,scale=320:-1:flags=lanczos,split[a][b];[a]palettegen[p];[b][p]paletteuse" \
-      -loop 0 "$gif" && echo "$gif" && exit 0
-  fi
   echo "$mp4"
   ;;
 *)

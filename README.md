@@ -31,9 +31,8 @@ It also needs (the installer says what's missing):
 
 - macOS with Xcode selected: `sudo xcode-select -s /Applications/Xcode.app`
 - tmux: `brew install tmux`
-- GitHub's CLI, logged in (`gh auth login`), for opening pull requests
-- ffmpeg (`brew install ffmpeg`), optional: turns recordings into GIFs that
-  play inside the PR
+- GitHub's CLI 2.99 or newer, logged in (`gh auth login`), for opening pull
+  requests with screenshots and recordings attached (`brew upgrade gh`)
 
 Only the plugin, from inside Claude Code:
 
@@ -131,11 +130,10 @@ claude --worktree price-screen
   last build), wait for it with signalbox's `wait_ready`, look with boop, and
   read errors and logs through signalbox's tools.
 - **Finish:** the `finish` skill screenshots the changed screens and records
-  the flow (a GIF, which plays inline, when ffmpeg is installed), commits,
-  pushes and opens the pull request (what changed, how it was verified, the
-  media), then stops the app and removes the worktree, keeping the branch.
-  GitHub has no CLI for PR attachments, so the media goes to a branch of its
-  own in the repo, `rn-agent-media`, which shares no history with the code.
+  the flow, commits, pushes and opens the pull request (what changed, how it
+  was verified), with the screenshots and the recording attached (`gh pr create
+  --attach`: they show inline, the video plays), then stops the app and removes
+  the worktree, keeping the branch.
 - **Session end:** if the app is still running, it stops and its simulator is
   deleted. A signalbox dashboard you started yourself is left alone.
 
