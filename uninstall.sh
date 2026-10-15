@@ -2,7 +2,7 @@
 # Remove the rn-agent Claude Code plugin; with --tools, also signalbox, simon
 # and boop.
 #
-#   curl -fsSL https://raw.githubusercontent.com/hvalec427/rn-agent/main/uninstall.sh | sh
+#   gh api repos/hvalec427/rn-agent/contents/uninstall.sh -H "Accept: application/vnd.github.raw" | sh
 #   … | sh -s -- --tools
 set -e
 

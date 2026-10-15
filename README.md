@@ -17,14 +17,18 @@ It's a Claude Code plugin on top of three tools, each in its own repo:
 
 ## Install
 
+The repo is private for now, so install through GitHub's CLI (logged in with
+`gh auth login`):
+
 ```sh
-curl -fsSL https://raw.githubusercontent.com/hvalec427/rn-agent/main/install.sh | sh
+gh api repos/hvalec427/rn-agent/contents/install.sh -H "Accept: application/vnd.github.raw" | sh
 ```
 
-It installs the three tools (each into `~/.<tool>/bin`, no sudo; dev builds,
-or `… | sh -s -- nightly`) and the plugin into Claude Code. Run it again to
-update everything. It needs macOS, Xcode (selected with `xcode-select`) and
-tmux.
+It installs the three tools (each into `~/.<tool>/bin`, no sudo) and the
+plugin into Claude Code. Run it again to update everything. The tools come
+from their dev builds, which have what agents need (`signalbox up --detach`);
+pick another channel with `… | sh -s -- stable` (or `nightly`, or a version
+tag). It needs macOS, Xcode (selected with `xcode-select`) and tmux.
 
 Only the plugin, from inside Claude Code:
 
@@ -35,8 +39,15 @@ Only the plugin, from inside Claude Code:
 
 Register each app once, in its main checkout: `signalbox init`.
 
-Uninstall: `… /rn-agent/main/uninstall.sh | sh` removes the plugin
-(`sh -s -- --tools` removes the tools too). It adds nothing to your repos.
+Uninstall: the same command with `uninstall.sh` removes the plugin; add
+`sh -s -- --tools` to remove the tools too. It adds nothing to your repos.
+
+## Using it
+
+There's nothing to call: start Claude Code in an app's checkout and work as
+usual. Ask a question and the agent answers from the code; ask for a change and
+it starts the app on its own simulator, checks the change there and reports
+what it saw. To start the app yourself first, type `/rn-agent:run-app`.
 
 ## How it works
 
