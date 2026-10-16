@@ -5,6 +5,11 @@ checkout gets its own iOS simulator and Metro port, started when the agent
 needs the app and never shared with another session, so several agents can
 work on different tasks side by side.
 
+Finishing a task as a pull request (with screenshots and a recording of the
+change) and working GitHub issues unattended come from
+[nightshift](https://github.com/hvalec427/nightshift), which the installer adds
+too.
+
 It's a Claude Code plugin on top of three tools, each in its own repo:
 
 - [signalbox](https://github.com/hvalec427/signalbox): Metro, builds,
@@ -129,18 +134,17 @@ claude --worktree price-screen
   port and a simulator of its own, the app installed from the main checkout's
   last build), wait for it with signalbox's `wait_ready`, look with boop, and
   read errors and logs through signalbox's tools.
-- **Finish:** the `finish` skill screenshots the changed screens and records
-  the flow, commits, pushes and opens the pull request (what changed, how it
-  was verified), with the screenshots and the recording attached (`gh pr create
-  --attach`: they show inline, the video plays), then stops the app and removes
-  the worktree, keeping the branch.
+- **Finish:** nightshift's `finish` skill: while the app is running it
+  screenshots the changed screens and records the flow (`boop record`), then
+  commits, pushes and opens the pull request with them attached
+  (`gh pr create --attach`: they show inline, the video plays), stops the app
+  and removes the worktree, keeping the branch.
 - **Session end:** if the app is still running, it stops and its simulator is
   deleted. A signalbox dashboard you started yourself is left alone.
 
 ## Layout
 
 - `plugin/`: the plugin: `hooks/` (session start and end), `skills/run-app/`,
-  `skills/finish/`,
   `.mcp.json` (signalbox's MCP server).
 - `.claude-plugin/marketplace.json`: this repo as a plugin marketplace.
 - `install.sh`, `uninstall.sh`.

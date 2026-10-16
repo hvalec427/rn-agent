@@ -29,6 +29,9 @@ for tool in $TOOLS; do
   fi
 done
 
+echo "── nightshift (finishing tasks as pull requests, working issues)"
+curl -fsSL https://raw.githubusercontent.com/hvalec427/nightshift/master/install.sh | sh
+
 echo "── Claude Code plugin"
 if command -v claude >/dev/null 2>&1; then
   # The first run adds and installs it; later runs update it.
